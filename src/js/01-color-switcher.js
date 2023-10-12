@@ -13,7 +13,6 @@ startBtn.addEventListener("click", () => {
         startBtn.setAttribute('disabled', true);
     }
     color = setInterval(() => {
-        // isActive = true;
         document.body.style.backgroundColor = getRandomHexColor();
     }, 1000)
 });
