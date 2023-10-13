@@ -19,6 +19,6 @@ startBtn.addEventListener("click", () => {
 });
 
 stopBtn.addEventListener("click", () => {
-    startBtn.removeAttribute('disabled');
     clearInterval(color);
+    startBtn.removeAttribute('disabled');
 })
