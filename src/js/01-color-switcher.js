@@ -1,5 +1,6 @@
 const startBtn = document.querySelector('button[data-start]');
 const stopBtn = document.querySelector('button[data-stop]');
+const body = document.querySelector('body');
 let isActive = false;
 
 function getRandomHexColor() {
@@ -13,7 +14,7 @@ startBtn.addEventListener("click", () => {
         startBtn.setAttribute('disabled', true);
     }
     color = setInterval(() => {
-        document.body.style.backgroundColor = getRandomHexColor();
+        body.style.backgroundColor = getRandomHexColor();
     }, 1000)
 });
 
