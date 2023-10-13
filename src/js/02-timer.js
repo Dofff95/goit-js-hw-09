@@ -1,9 +1,9 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { Report } from 'notiflix/build/notiflix-report-aio';
+
 const flatpickr = require("flatpickr");
 const input = document.querySelector("#datetime-picker");
-
 const button = document.querySelector('button[data-start]');
 button.setAttribute('disabled', true);
 
@@ -20,15 +20,22 @@ const options = {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
+
         console.log(selectedDates[0]);
         if (selectedDates[0] > options.defaultDate) {
             button.removeAttribute('disabled');
             button.addEventListener("click", countdown);
+        } else {
+            Report.failure("Please choose a date in the future");
+        }}
+    } 
 function countdown() {
+        input.setAttribute('disabled', true);
+        button.setAttribute('disabled', true);
     setInterval(() => {
         console.log("стартуєм");
         const currentTime = Date.now();
-        const countTime = selectedDates[0] - currentTime;
+        const countTime = flatpickr.parseDate(input.value) - currentTime;
         const {days, hours, minutes, seconds} = convertMs(countTime);
         updateCounter();
         function updateCounter() {
@@ -40,12 +47,7 @@ function countdown() {
         console.log(`${days}: ${hours}: ${minutes}: ${seconds}`);
     }, 1000)
 }
-        } else {
-            Report.failure("Please choose a date in the future");
-        }
-    },
-};
-console.log(options.defaultDate);
+// console.log(options.defaultDate);
 flatpickr(input, options);
 
 function addLeadingZero(v) {
@@ -69,3 +71,6 @@ function convertMs(ms) {
     
     return { days, hours, minutes, seconds };
 }
+
+
+
