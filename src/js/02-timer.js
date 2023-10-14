@@ -8,10 +8,10 @@ const button = document.querySelector('button[data-start]');
 button.setAttribute('disabled', true);
 
 const refs = {
-day: document.querySelector('span[data-days]'),
-hour: document.querySelector('span[data-hours]'),
-minut: document.querySelector('span[data-minutes]'),
-second: document.querySelector('span[data-seconds]'),
+    day: document.querySelector('span[data-days]'),
+    hour: document.querySelector('span[data-hours]'),
+    minut: document.querySelector('span[data-minutes]'),
+    second: document.querySelector('span[data-seconds]'),
 }
 
 const options = {
@@ -20,7 +20,7 @@ const options = {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
-
+        
         console.log(selectedDates[0]);
         if (selectedDates[0] > options.defaultDate) {
             button.removeAttribute('disabled');
@@ -29,16 +29,16 @@ const options = {
             Report.failure("Please choose a date in the future");
         }}
     } 
-function countdown() {
+    function countdown() {
         input.setAttribute('disabled', true);
         button.setAttribute('disabled', true);
-    setInterval(() => {
-        console.log("стартуєм");
-        const currentTime = Date.now();
-        const countTime = flatpickr.parseDate(input.value) - currentTime;
-        const {days, hours, minutes, seconds} = convertMs(countTime);
-        updateCounter();
-        function updateCounter() {
+        setInterval(() => {
+            console.log("стартуєм");
+            const currentTime = Date.now();
+            const countTime = flatpickr.parseDate(input.value) - currentTime;
+            const {days, hours, minutes, seconds} = convertMs(countTime);
+            updateCounter();
+            function updateCounter() {
             refs.day.textContent = days;
             refs.hour.textContent = hours;
             refs.minut.textContent = minutes;
@@ -46,11 +46,11 @@ function countdown() {
         };
         console.log(`${days}: ${hours}: ${minutes}: ${seconds}`);
     }, 1000)
-}
-flatpickr(input, options);
+};
 function addLeadingZero(v) {
     return String(v).padStart(2, '0'); 
-}
+};
+flatpickr(input, options);
 function convertMs(ms) { 
     // Number of milliseconds per unit of time
     const second = 1000;
