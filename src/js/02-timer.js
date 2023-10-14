@@ -47,9 +47,7 @@ function countdown() {
         console.log(`${days}: ${hours}: ${minutes}: ${seconds}`);
     }, 1000)
 }
-// console.log(options.defaultDate);
 flatpickr(input, options);
-
 function addLeadingZero(v) {
     return String(v).padStart(2, '0'); 
 }
