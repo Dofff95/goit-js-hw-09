@@ -2,7 +2,6 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { Report } from 'notiflix/build/notiflix-report-aio';
 
-// const flatpickr = require("flatpickr");
 const input = document.querySelector("#datetime-picker");
 const button = document.querySelector('button[data-start]');
 button.setAttribute('disabled', true);
