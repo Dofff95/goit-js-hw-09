@@ -6,21 +6,13 @@ form.addEventListener("submit", onPromiseCreate);
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
-    if (delay === 0) {
+    setTimeout(() => {
       if (shouldResolve) {
         resolve({ position, delay });
       } else {
         reject({ position, delay });
       }
-    } else {
-      setTimeout(() => {
-        if (shouldResolve) {
-          resolve({ position, delay });
-        } else {
-          reject({ position, delay });
-        }
-      }, delay);
-    }
+    }, delay);
   });
 }
 
@@ -37,7 +29,9 @@ function onPromiseCreate(evt) {
   }
 
   for (let i = 1; i <= inputAmount; i += 1) {
-    createPromise(i, i === 1 ? 0 : inputDelay)
+    const currentDelay = inputDelay + (i - 1) * inputStep;
+
+    createPromise(i, currentDelay)
       .then(({ position, delay }) => {
         return Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
