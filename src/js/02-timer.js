@@ -5,6 +5,7 @@ import { Report } from 'notiflix/build/notiflix-report-aio';
 const input = document.querySelector("#datetime-picker");
 const button = document.querySelector('button[data-start]');
 button.setAttribute('disabled', true);
+let userTime = Date.now();
 
 const refs = {
     day: document.querySelector('span[data-days]'),
@@ -22,18 +23,22 @@ const options = {
         console.log(selectedDates[0]);
         if (selectedDates[0] > options.defaultDate) {
             button.removeAttribute('disabled');
+            userTime = selectedDates[0];
             button.addEventListener("click", countdown);
         } else {
             Report.failure("Please choose a date in the future");
         }}
     } 
-    function countdown() {
-        input.setAttribute('disabled', true);
+function addLeadingZero(v) {
+        return String(v).padStart(2, '0'); 
+    };
+function countdown() {
+    input.setAttribute('disabled', true);
         button.setAttribute('disabled', true);
         setInterval(() => {
             console.log("стартуєм");
             const currentTime = Date.now();
-            const countTime = flatpickr.parseDate(input.value) - currentTime;
+            const countTime =  userTime - currentTime;
             const {days, hours, minutes, seconds} = convertMs(countTime);
             updateCounter();
             function updateCounter() {
@@ -44,9 +49,6 @@ const options = {
         };
         console.log(`${days}: ${hours}: ${minutes}: ${seconds}`);
     }, 1000)
-};
-function addLeadingZero(v) {
-    return String(v).padStart(2, '0'); 
 };
 flatpickr(input, options);
 function convertMs(ms) { 
