@@ -5,7 +5,7 @@ import { Report } from 'notiflix/build/notiflix-report-aio';
 const input = document.querySelector("#datetime-picker");
 const button = document.querySelector('button[data-start]');
 button.setAttribute('disabled', true);
-let userTime = Date.now();
+let userTime = null;
 
 const refs = {
     day: document.querySelector('span[data-days]'),
@@ -26,7 +26,7 @@ const options = {
             userTime = selectedDates[0];
             button.addEventListener("click", countdown);
         } else {
-            Report.failure("Please choose a date in the future");
+            Report.failure("Please choose a date in the future", "Select the next date and press Start button");
         }}
     } 
 function addLeadingZero(v) {
@@ -35,9 +35,12 @@ function addLeadingZero(v) {
 function countdown() {
     input.setAttribute('disabled', true);
         button.setAttribute('disabled', true);
-        setInterval(() => {
-            console.log("стартуєм");
+        const timeInterval = setInterval(() => {
             const currentTime = Date.now();
+            if (userTime < currentTime) {
+                Report.success("Time is out!", "Select the next date and press Start button");
+                clearInterval(timeInterval);
+        } else {console.log("стартуєм");
             const countTime =  userTime - currentTime;
             const {days, hours, minutes, seconds} = convertMs(countTime);
             updateCounter();
@@ -45,10 +48,12 @@ function countdown() {
             refs.day.textContent = days;
             refs.hour.textContent = hours;
             refs.minut.textContent = minutes;
-            refs.second.textContent = seconds;
+            refs.second.textContent = seconds;}
+            console.log(`${days}: ${hours}: ${minutes}: ${seconds}`);
         };
-        console.log(`${days}: ${hours}: ${minutes}: ${seconds}`);
+        
     }, 1000)
+   
 };
 flatpickr(input, options);
 function convertMs(ms) { 
@@ -69,6 +74,4 @@ function convertMs(ms) {
     
     return { days, hours, minutes, seconds };
 }
-
-
 
